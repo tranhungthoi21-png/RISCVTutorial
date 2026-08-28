@@ -23,7 +23,6 @@
 #define SHAKE128    3
 #define SHAKE256    4
 
-// Macro truy xu?t thanh ghi 64-bit an toàn
 #define _REG64(base, offset) (*(volatile uint64_t *)((uintptr_t)(base) + (offset)))
 
 void keccak_reset(volatile void *keccakCtrl){
@@ -120,8 +119,6 @@ void keccak_read_done(volatile void *keccakCtrl){
 void keccak_hash_again(volatile void *keccakCtrl){
     _REG64(keccakCtrl, REG_KECCAK_FIN_PACKET)  = 0x0000000000000001;
 }
-
-// D? li?u d?u vào: "TRAN HUNG THOI" (14 bytes = 112 bits) chuy?n sang Little-Endian 64-bit
 uint64_t input_keccak[25] = {
     0x4E5548204E415254ULL, // "TRAN HUNG"
     0x0000494F48542047ULL  // " THOI" + padding 0
@@ -136,13 +133,13 @@ int main(int hartid, char **argv) {
     printf("=================================================\n");
 
     printf("Input values:\n");
-    for(int i = 0; i < 2; i++){ // Ch? in 2 ph?n t? d?u có ch?a d? li?u tên
+    for(int i = 0; i < 2; i++){ 
         printf("Input[%d] = 0x%016lx\n", i, input_keccak[i]);
     }
     printf("\n");
 
     int line, mode;
-    int len = 112; // Chi?u dài thông di?p c?a chu?i "TRAN HUNG THOI" (14 bytes * 8 = 112 bits)
+    int len = 112; 
     int hash_len;
 
     // --- 4.1. SHA3-224 ---
