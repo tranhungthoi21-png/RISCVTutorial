@@ -1,0 +1,29 @@
+==========================================================================
+verify_rtl.py report — 2026-08-27T16:44:25
+RTL file : /mnt/user-data/uploads/ring_generator48.v
+width n  : 48
+h(x)     : x^48 + x^35 + x^22 + x^10 + 1
+==========================================================================
+
+[1] Parsing RTL and building the GF(2) transition matrix M ...
+    OK — 48 state-bit equations recovered.
+    iTap injection points (iTap bit -> state bit): {0: 24, 1: 26, 2: 29, 3: 32, 4: 34, 5: 38}
+
+[2] Checking h(M) = 0  (Cayley-Hamilton: confirms the RTL really
+    implements the polynomial you claim it does) ...
+    h(M) == 0 ?  True
+
+[3] Proving primitivity by the matrix-order method ...
+    2^48-1 = 281474976710655
+    prime factorisation: {3: 2, 5: 1, 7: 1, 13: 1, 17: 1, 97: 1, 241: 1, 257: 1, 673: 1}
+    M^(2^48-1) == I ?            True
+    M^((2^48-1)/p) != I for every prime factor p ?  True
+    => h(x) is PRIMITIVE over GF(2)
+
+[4] Regenerating the 512-cycle trace from the parsed RTL
+    model and diffing against /mnt/user-data/uploads/golden_rg48.txt ...
+    PASS — all 512 states match (LFSR seed 0xA5).
+
+==========================================================================
+OVERALL: PASS
+==========================================================================
